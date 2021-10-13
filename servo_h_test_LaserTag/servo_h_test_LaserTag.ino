@@ -6,6 +6,7 @@ Servo servoH; //servo Horizontal position
 Servo servoW; //servo Vertical position
 
 int del = 170; //value DELAY
+int count = 0;
 int buttonSt = 0;
 int pos = 65; //variable to store the servo position
 int posH = 0;
@@ -44,15 +45,19 @@ void loop() {
     delay(2000);
     for (posH = 65; posH >= 15; posH -= 1) { 
       servoH.write(posH);
+      Serial.print("posHFw= ");
+      Serial.println(posH);
       motorForward();    
-      delay(del);                      
+      delay(del+count);                      
   }
     motorStop(); 
     delay(2000);
     for (posH = 15; posH <= 65; posH += 1) {
       servoH.write(posH); 
+      Serial.print("posHBw= ");
+      Serial.println(posH);
       motorBackward();              
-      delay(del);                      
+      delay(del-count);                      
   }
   }
   else{ 
