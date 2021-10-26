@@ -1,5 +1,5 @@
 //TESTAS for LASER TAG robotic
-//versija 2021-10-12
+//versija 2021-10-13
 #include <Servo.h>
 
 Servo servoH; //servo Horizontal position
@@ -13,7 +13,7 @@ int posH = 0;
 
 void setup() {
   Serial.begin(9600);
-  pinMode(2, INPUT);  //pin button START mode
+  pinMode(2, INPUT_PULLUP);  //pin button START mode
   pinMode(3, OUTPUT); //pin LED(red) START OK
   pinMode(4, OUTPUT); //pin LED(green) SETUP OK
   pinMode(8, OUTPUT); //pin motor forward
@@ -45,19 +45,25 @@ void loop() {
     delay(2000);
     for (posH = 65; posH >= 15; posH -= 1) { 
       servoH.write(posH);
-      Serial.print("posHFw= ");
-      Serial.println(posH);
-      motorForward();    
-      delay(del+count);                      
+      //Serial.print("posHFw= ");
+      //Serial.println(posH);
+      motorForward(); 
+      count = del + posH;  
+      Serial.print("countFw= ");
+      Serial.println(count); 
+      delay(count);                      
   }
     motorStop(); 
     delay(2000);
     for (posH = 15; posH <= 65; posH += 1) {
       servoH.write(posH); 
-      Serial.print("posHBw= ");
-      Serial.println(posH);
-      motorBackward();              
-      delay(del-count);                      
+      //Serial.print("posHBw= ");
+      //Serial.println(posH);
+      motorBackward();  
+      count = del - posH;
+      Serial.print("countBw= ");
+      Serial.println(count);      
+      delay(count);                      
   }
   }
   else{ 
